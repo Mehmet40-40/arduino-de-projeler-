@@ -1,0 +1,17 @@
+#include <IRremote.h>
+const int recvPin = 11;
+const int ledPin = 13;
+IRrecv irrecv(recvPin);
+decode_results results;
+void setup() {
+  pinMode(ledPin, OUTPUT);
+  irrecv.enableIRIn();
+}
+void loop() {
+  if (irrecv.decode(&results)) {
+    if (results.value == 0xFF30CF) { // Örnek IR kodu
+      digitalWrite(ledPin, !digitalRead(ledPin));
+    }
+    irrecv.resume();
+  }
+}
